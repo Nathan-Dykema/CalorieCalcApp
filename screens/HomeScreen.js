@@ -5,6 +5,7 @@ import { auth } from '../firebase'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FoodJournalTabScreen from './FoodJournalTabScreen';
 import HomeTabScreen from './HomeTabScreen';
+import ProfileTabScreen from './ProfileTabScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ const HomeScreen = () => {
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
       <Tab.Screen name="Home" component={HomeTabScreen} />
       <Tab.Screen name="Food Journal" component={FoodJournalTabScreen} />
+      <Tab.Screen name="Profile" component={ProfileTabScreen} />
     
     </Tab.Navigator>
   )

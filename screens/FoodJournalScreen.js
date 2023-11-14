@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import HomeTabScreen from './HomeTabScreen'; // Import the HomeScreen component
 import FoodJournalTabScreen from './FoodJournalTabScreen'; // Create a new component for the "FoodJournal" tab
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ProfileTabScreen from './ProfileTabScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,6 +15,7 @@ const FoodJournalScreen = () => {
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
       <Tab.Screen name="Home" component={HomeTabScreen} />
       <Tab.Screen name="Food Journal" component={FoodJournalTabScreen} />
+      <Tab.Screen name="Profile" component={ProfileTabScreen} />
     </Tab.Navigator>
   );
 };
