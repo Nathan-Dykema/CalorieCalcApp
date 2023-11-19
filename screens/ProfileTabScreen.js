@@ -9,15 +9,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ProfileTabScreen = () => {
 
-
-  
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       
     </SafeAreaView>
-
-    
   );
 };
  

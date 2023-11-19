@@ -18,7 +18,6 @@ const HomeScreen = () => {
       <Tab.Screen name="Home" component={HomeTabScreen} />
       <Tab.Screen name="Food Journal" component={FoodJournalTabScreen} />
       <Tab.Screen name="Profile" component={ProfileTabScreen} />
-    
     </Tab.Navigator>
   )
 }
