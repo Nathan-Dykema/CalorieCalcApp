@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { LinearGradient } from "expo-linear-gradient";
 
 
 const LoginScreen = () => {
@@ -45,9 +46,9 @@ const LoginScreen = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior="padding"
     >
       <View style={styles.inputContainer}>
+      <Text style={{ fontStyle: 'italic' }}>Please Sign in or register</Text>
         <TextInput
           placeholder="Email"
           value={email}
@@ -66,10 +67,13 @@ const LoginScreen = () => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={handleLogin}
-          style={styles.button}
+          style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonOutlineText}>Login</Text>
         </TouchableOpacity>
+        <Text> </Text>
+        <Text>OR</Text>
+        <Text> </Text>
         <TouchableOpacity
           onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
@@ -88,6 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   inputContainer: {
     width: '80%'
@@ -106,25 +111,22 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: 'black',
     width: '100%',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    
   },
   buttonOutline: {
-    backgroundColor: 'white',
+    backgroundColor: '#d2ffcf',
     marginTop: 5,
-    borderColor: '#0782F9',
+    borderColor: '#4dc445',
     borderWidth: 2,
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
+ 
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#4dc445',
     fontWeight: '700',
     fontSize: 16,
   },

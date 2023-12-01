@@ -1,24 +1,26 @@
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, Text, View } from 'react-native';
-import HomeTabScreen from './HomeTabScreen'; // Import the HomeScreen component
-import FoodJournalTabScreen from './FoodJournalTabScreen'; // Create a new component for the "FoodJournal" tab
+import { useNavigation } from '@react-navigation/core'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FoodJournalTabScreen from './FoodJournalTabScreen';
+import HomeTabScreen from './HomeTabScreen';
 import ProfileTabScreen from './ProfileTabScreen';
 
 const Tab = createBottomTabNavigator();
 
-const FoodJournalScreen = () => {
-  const navigation = useNavigation();
+const HomeScreen = () => {
+  const navigation = useNavigation()
 
   return (
+
     <Tab.Navigator tabBar={(props) => <CustomTabBar {...props} />}>
       <Tab.Screen name="Home" component={HomeTabScreen} />
       <Tab.Screen name="Food Journal" component={FoodJournalTabScreen} />
       <Tab.Screen name="Profile" component={ProfileTabScreen} />
     </Tab.Navigator>
-  );
-};
+  )
+}
+
 
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
@@ -27,7 +29,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
       style={{
         flexDirection: 'row',
         height: 60,
-        backgroundColor: 'lightgrey',
+        backgroundColor: 'black',
         justifyContent: 'space-around',
         alignItems: 'center',
         position: 'absolute',
@@ -67,7 +69,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             onPress={onPress}
             key={index}
           >
-            <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>{label}</Text>
+            <Text style={{ color: isFocused ? '#4dc445' : 'white' }}>{label}</Text>
           </TouchableOpacity>
         );
       })}
@@ -75,4 +77,31 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
   );
 };
 
-export default FoodJournalScreen;
+
+
+
+
+
+
+export default HomeScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+   button: {
+    backgroundColor: '#0782F9',
+    width: '60%',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 40,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+})
