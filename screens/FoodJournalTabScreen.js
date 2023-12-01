@@ -3,10 +3,6 @@ import { View, Text, ScrollView, FlatList, TouchableOpacity, StyleSheet, Modal, 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 
-import firestore from "@react-native-firebase/firestore"
-
-
-
 
 
 const FoodJournalTabScreen = () => {
