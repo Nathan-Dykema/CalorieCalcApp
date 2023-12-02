@@ -2,8 +2,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import { auth, db} from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getFirestore, doc, collection, setDoc } from "firebase/firestore";
+
 import { LinearGradient } from "expo-linear-gradient";
 
 
@@ -23,15 +25,101 @@ const LoginScreen = () => {
     return unsubscribe
   }, [])
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredentials.user;
+      console.log('Registered with:', user.email);
+  
+      // Create a collection named "users" and a document for the new user
+      const usersCollection = collection(getFirestore(), "users");
+      const userDocRef = doc(usersCollection, user.uid);
+  
+      // Set user properties (you can add more fields as needed)
+      await setDoc(userDocRef, {
+        email: user.email,
+       
+      });
+  ///////////////////////////////////////////////////////////////////////////////////
+      // Create a separate collection named "snacks" for the user with a random ID
+      const snacksCollection = collection(userDocRef, "snacks");
+      const snackDocRef = doc(snacksCollection);
+  
+      // Set fields for the "snacks" collection
+      await setDoc(snackDocRef, {
+        name: "",
+        calories: 0,
+        quantity: 0,
+        
+      });
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email);
-      })
-      .catch(error => alert(error.message))
-  }
+    /////////////////////////////////////////////////////////////////////////////////
+    // Create a separate collection named "snacks" for the user with a random ID
+    const breakfastCollection = collection(userDocRef, "breakfast");
+    const breakfastDocRef = doc(breakfastCollection);
+
+    // Set fields for the "snacks" collection
+    await setDoc(breakfastDocRef, {
+      name: "",
+      calories: 0,
+      quantity: 0,
+      
+    });
+    /////////////////////////////////////////////////////////////////////////////////
+    // Create a separate collection named "snacks" for the user with a random ID
+    const lunchCollection = collection(userDocRef, "lunch");
+    const lunchDocRef = doc(lunchCollection);
+
+    // Set fields for the "snacks" collection
+    await setDoc(lunchDocRef, {
+      name: "",
+      calories: 0,
+      quantity: 0,
+      
+    });
+    /////////////////////////////////////////////////////////////////////////////////
+    // Create a separate collection named "snacks" for the user with a random ID
+    const dinnerCollection = collection(userDocRef, "dinner");
+    const dinnerDocRef = doc(dinnerCollection);
+
+    // Set fields for the "snacks" collection
+    await setDoc(dinnerDocRef, {
+      name: "",
+      calories: 0,
+      quantity: 0,
+      
+    });
+    /////////////////////////////////////////////////////////////////////////////////
+    // Create a separate collection named "snacks" for the user with a random ID
+    const desertCollection = collection(userDocRef, "desert");
+    const desertDocRef = doc(desertCollection);
+
+    // Set fields for the "snacks" collection
+    await setDoc(desertDocRef, {
+      name: "",
+      calories: 0,
+      quantity: 0,
+      
+    });
+    /////////////////////////////////////////////////////////////////////////////////
+    // Create a separate collection named "snacks" for the user with a random ID
+    const exerciseCollection = collection(userDocRef, "exercise");
+    const exerciseDocRef = doc(exerciseCollection);
+
+    // Set fields for the "snacks" collection
+    await setDoc(exerciseDocRef, {
+      name: "",
+      calories: 0,
+      
+    });
+
+    /////////////////////////////////////////////////////////////////////////////////
+  
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  
 
   const handleLogin = () => {
 
