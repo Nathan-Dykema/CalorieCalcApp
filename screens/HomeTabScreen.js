@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { auth } from '../firebase'
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -22,7 +22,7 @@ const HomeTabScreen = () => {
 
   return (
     <LinearGradient 
-    colors={['white','#eafae8', '#e5ffe3', '#7bc276', '#4dc445']} // Gradient 
+    colors={['white','white','#eafae8', '#e5ffe3', '#7bc276', '#4dc445']} // Gradient 
       style={styles.gradientBackground}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
@@ -35,7 +35,16 @@ const HomeTabScreen = () => {
           <Text style={styles.buttonText}>Sign out</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.bigText}>Welcome to your calorie tracker!</Text>
+
+      <Text></Text>
+      
+      <Image
+        source={require('../assets/nutrinow-logo.png')}
+        style={{ width: 200, height: 205 }}
+      />
+
+
+      <Text style={styles.bigText}>Welcome to NutriNow!</Text>
       <Text style={styles.infoText}>
         Make sure to stay up to date with our app as this is where you can find any news or updates we can share with you!
       </Text>
@@ -99,7 +108,6 @@ const styles = StyleSheet.create({
   gradientBackground: {
     flex: 1,
   },
- 
 });
 
 export default HomeTabScreen;

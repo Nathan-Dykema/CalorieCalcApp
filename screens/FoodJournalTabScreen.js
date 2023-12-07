@@ -9,7 +9,7 @@ import { onSnapshot, collection, query, where, getFirestore, doc, setDoc, addDoc
 
 const FoodJournalTabScreen = () => {
 
-
+ 
   useEffect(() => {
     const user = auth.currentUser;
     if (!user) {
@@ -58,8 +58,9 @@ const FoodJournalTabScreen = () => {
 
   const [selectedButton, setSelectedButton] = useState(null);
 
-
   const [currentDate, setCurrentDate] = useState('');
+
+  
 
   useEffect(() => {
     // Update the current date when the component mounts
@@ -91,7 +92,7 @@ const FoodJournalTabScreen = () => {
     setSelectedButton(null);
   };
 
-
+ 
   const [foods, setFoods] = useState([
     { buttonId: 'today', title: 'Today', data: [] }, // TodaySection 
     { buttonId: '0', title: 'Snacks', data: [] },
@@ -393,6 +394,7 @@ const AddForm = () => {
                         ],
                       };
                 
+                      
                       const updatedFoods = [...prevFoods];
                       updatedFoods[sectionIndex] = updatedSection;
                 
@@ -413,6 +415,7 @@ const AddForm = () => {
             } catch (error) {
               console.error('Error adding document: ', error);
             }
+            
           }
         }}
       style={styles.button}
@@ -502,6 +505,7 @@ const AddForm = () => {
     </SafeAreaView>
 
     </LinearGradient>
+    
   );
 };
  
@@ -607,7 +611,6 @@ const styles = StyleSheet.create({
     gradientBackground: {
       flex: 1,
     },
-    
   });
   
   export default FoodJournalTabScreen;

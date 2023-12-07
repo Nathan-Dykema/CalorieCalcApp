@@ -1,12 +1,12 @@
 //import { useNavigation } from '@react-navigation/core'
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth, db} from '../firebase'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native'
+import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, collection, setDoc } from "firebase/firestore";
-
 import { LinearGradient } from "expo-linear-gradient";
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
 
 
 const LoginScreen = () => {
@@ -27,101 +27,54 @@ const LoginScreen = () => {
 
   const handleSignUp = async () => {
     try {
-      const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredentials.user;
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
       console.log('Registered with:', user.email);
   
-      // Create a collection named "users" and a document for the new user
-      const usersCollection = collection(getFirestore(), "users");
-      const userDocRef = doc(usersCollection, user.uid);
+      // Create user document in Firestore
+      const db = getFirestore();
+      const usersCollection = collection(db, 'users');
   
-      // Set user properties (you can add more fields as needed)
-      await setDoc(userDocRef, {
+      // Customize the fields you want to add to the user document
+      const userFields = {
         email: user.email,
-       
-      });
-  ///////////////////////////////////////////////////////////////////////////////////
-      // Create a separate collection named "snacks" for the user with a random ID
-      const snacksCollection = collection(userDocRef, "snacks");
-      const snackDocRef = doc(snacksCollection);
+        // Add more fields as needed
+      };
   
-      // Set fields for the "snacks" collection
-      await setDoc(snackDocRef, {
-        name: "",
+      const newUserDocRef = await addDoc(usersCollection, userFields);
+  
+      console.log('User created with ID:', newUserDocRef.id);
+  
+      // Create 'snacks' collection for the user
+      const snacksCollectionRef = collection(db, 'users', newUserDocRef.id, 'snacks');
+      const breakfastCollectionRef = collection(db, 'users', newUserDocRef.id, 'breakfast');
+      const lunchCollectionRef = collection(db, 'users', newUserDocRef.id, 'lunch');
+      const dinnerCollectionRef = collection(db, 'users', newUserDocRef.id, 'dinner');
+      const desertCollectionRef = collection(db, 'users', newUserDocRef.id, 'desert');
+      const exerciseCollectionRef = collection(db, 'users', newUserDocRef.id, 'exercise');
+  
+     
+      const values = {
+        name: '',
         calories: 0,
-        quantity: 0,
-        
-      });
-
-    /////////////////////////////////////////////////////////////////////////////////
-    // Create a separate collection named "snacks" for the user with a random ID
-    const breakfastCollection = collection(userDocRef, "breakfast");
-    const breakfastDocRef = doc(breakfastCollection);
-
-    // Set fields for the "snacks" collection
-    await setDoc(breakfastDocRef, {
-      name: "",
-      calories: 0,
-      quantity: 0,
+        quantity: null,
+      };
+  
       
-    });
-    /////////////////////////////////////////////////////////////////////////////////
-    // Create a separate collection named "snacks" for the user with a random ID
-    const lunchCollection = collection(userDocRef, "lunch");
-    const lunchDocRef = doc(lunchCollection);
-
-    // Set fields for the "snacks" collection
-    await setDoc(lunchDocRef, {
-      name: "",
-      calories: 0,
-      quantity: 0,
-      
-    });
-    /////////////////////////////////////////////////////////////////////////////////
-    // Create a separate collection named "snacks" for the user with a random ID
-    const dinnerCollection = collection(userDocRef, "dinner");
-    const dinnerDocRef = doc(dinnerCollection);
-
-    // Set fields for the "snacks" collection
-    await setDoc(dinnerDocRef, {
-      name: "",
-      calories: 0,
-      quantity: 0,
-      
-    });
-    /////////////////////////////////////////////////////////////////////////////////
-    // Create a separate collection named "snacks" for the user with a random ID
-    const desertCollection = collection(userDocRef, "desert");
-    const desertDocRef = doc(desertCollection);
-
-    // Set fields for the "snacks" collection
-    await setDoc(desertDocRef, {
-      name: "",
-      calories: 0,
-      quantity: 0,
-      
-    });
-    /////////////////////////////////////////////////////////////////////////////////
-    // Create a separate collection named "snacks" for the user with a random ID
-    const exerciseCollection = collection(userDocRef, "exercise");
-    const exerciseDocRef = doc(exerciseCollection);
-
-    // Set fields for the "snacks" collection
-    await setDoc(exerciseDocRef, {
-      name: "",
-      calories: 0,
-      
-    });
-
-    /////////////////////////////////////////////////////////////////////////////////
+      await addDoc(snacksCollectionRef, values);
+      await addDoc(breakfastCollectionRef, values);
+      await addDoc(lunchCollectionRef, values);
+      await addDoc(dinnerCollectionRef, values);
+      await addDoc(desertCollectionRef, values);
+      await addDoc(exerciseCollectionRef, values);
   
     } catch (error) {
       alert(error.message);
     }
   };
-  
 
-  const handleLogin = () => {
+  const handleLogin = () => { 
 
     signInWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
@@ -135,6 +88,14 @@ const LoginScreen = () => {
     <KeyboardAvoidingView
       style={styles.container}
     >
+
+
+      <Image
+        source={require('../assets/nutrinow-logo.png')}
+        style={{ width: 200, height: 205 }}
+      />
+      <Text></Text>
+
       <View style={styles.inputContainer}>
       <Text style={{ fontStyle: 'italic' }}>Please Sign in or register</Text>
         <TextInput
